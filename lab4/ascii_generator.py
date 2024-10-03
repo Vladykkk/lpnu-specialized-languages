@@ -1,86 +1,117 @@
+import os
+
 class ASCIIGenerator:
     def __init__(self):
-        self.char_set = ' .:-=+*#%@'  # From least to most dense
+        self.char_set = {}
+        self.load_characters()
+        self.width = 0
+        self.height = 0
+        self.text = ""
+        self.alignment = "left"
 
-    def generate_art(self, text, width, height, alignment, color_option):
-        # Split the text into lines that fit within the width
-        lines = self._split_text(text, width)
-        
-        # Pad or truncate lines to match the desired height
-        lines = self._adjust_height(lines, height)
-        
-        # Apply alignment to each line
-        aligned_lines = [self._align_line(line, width, alignment) for line in lines]
-        
-        # Convert text to ASCII art
-        ascii_art = self._text_to_ascii(aligned_lines)
-        
-        return self._apply_color(ascii_art, color_option)
-
-    def _split_text(self, text, max_width):
-        words = text.split()
-        lines = []
-        current_line = []
-        current_length = 0
-
-        for word in words:
-            if current_length + len(word) + len(current_line) <= max_width:
-                current_line.append(word)
-                current_length += len(word)
+    def load_characters(self):
+        # Load ASCII art from text files for letters, numbers, and symbols
+        for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':\",.<>?/ ":
+            if char.isalpha():
+                filename = f"alphabets/{char}.txt"
+            elif char.isdigit():
+                filename = f"numbers/{char}.txt"
             else:
-                if current_line:
-                    lines.append(' '.join(current_line))
-                current_line = [word]
-                current_length = len(word)
+                filename = f"symbols/{char}.txt"
+                
+            if os.path.exists(filename):
+                with open(filename, 'r') as file:
+                    self.char_set[char] = [line.rstrip('\n') for line in file.readlines()]
+            else:
+                self.char_set[char] = [' ' * 10] * 10  # Default to blank if file doesn't exist
 
-        if current_line:
-            lines.append(' '.join(current_line))
+    # Task 1: User Input
+    def get_user_input(self):
+        self.text = input("Enter the word or phrase to convert into ASCII art: ")
+        self.width = int(input("Enter the width for each character (default is 10): ") or 10)
+        self.height = int(input("Enter the height for each character (default is 10): ") or 10)
 
-        return lines
-
-    def _adjust_height(self, lines, desired_height):
-        current_height = len(lines)
-        if current_height < desired_height:
-            padding = (desired_height - current_height) // 2
-            return [''] * padding + lines + [''] * (desired_height - current_height - padding)
+        # Improved UX for text alignment
+        print("Choose text alignment:")
+        print("1. Left")
+        print("2. Center")
+        print("3. Right")
+        alignment_option = input("Choose an option (1, 2, or 3): ").strip()
+        
+        if alignment_option == '1':
+            self.alignment = 'left'
+        elif alignment_option == '2':
+            self.alignment = 'center'
+        elif alignment_option == '3':
+            self.alignment = 'right'
         else:
-            return lines[:desired_height]
+            print("Invalid option. Defaulting to left alignment.")
+            self.alignment = 'left'
 
-    def _align_line(self, line, width, alignment):
-        if alignment == 'left':
+    # Task 2-5: Generate ASCII Art
+    def generate_art(self):
+        ascii_lines = ['' for _ in range(self.height)]
+        for char in self.text:
+            if char in self.char_set:
+                char_lines = self.char_set[char]
+            else:
+                # Handle undefined characters by using a blank space
+                char_lines = [' ' * self.width] * self.height
+            
+            # Ensure char_lines has enough lines
+            if len(char_lines) < self.height:
+                char_lines += [' ' * self.width] * (self.height - len(char_lines))
+                
+            for i in range(self.height):
+                ascii_lines[i] += char_lines[i] + ' '  # Add a single space between characters
+        return ascii_lines
+
+    # Task 6: Display Art
+    def display_art(self, ascii_art):
+        for line in ascii_art:
+            aligned_line = self._align_line(line, self.width * len(self.text))
+            print(aligned_line)
+
+    def _align_line(self, line, width):
+        if self.alignment == 'left':
             return line.ljust(width)
-        elif alignment == 'center':
+        elif self.alignment == 'center':
             return line.center(width)
-        else:  # right alignment
+        elif self.alignment == 'right':
             return line.rjust(width)
+        else:
+            return line
 
-    def _text_to_ascii(self, lines):
-        ascii_art = []
-        for line in lines:
-            ascii_line = ''
-            for char in line:
-                if char.isalnum():
-                    index = ord(char.lower()) - ord('a')
-                    ascii_char = self.char_set[index % len(self.char_set)]
-                elif char.isspace():
-                    ascii_char = ' '
-                else:
-                    ascii_char = char
-                ascii_line += ascii_char
-            ascii_art.append(ascii_line)
-        return '\n'.join(ascii_art)
+    # New Method: Save Art to File
+    def save_art_to_file(self, ascii_art):
+        filename = input("Enter the filename to save the ASCII art (e.g., art.txt): ")
+        with open(filename, 'w') as file:
+            for line in ascii_art:
+                file.write(line + '\n')
+        print(f"ASCII art saved to {filename}")
 
-    def _apply_color(self, ascii_art, color_option):
-        if color_option == "bw":
-            return ascii_art
-        elif color_option == "grayscale":
-            colored_art = ""
-            for char in ascii_art:
-                if char == ' ':
-                    colored_art += char
-                elif char == '\n':
-                    colored_art += '\n'
-                else:
-                    gray_value = 232 + min(23, self.char_set.index(char) * 2)
-                    colored_art += f"\033[38;5;{gray_value}m{char}\033[0m"
-            return colored_art
+# Task 10: User Interface
+def main():
+    generator = ASCIIGenerator()
+    generator.get_user_input()
+    
+    ascii_art = generator.generate_art()
+    
+    # Display Art
+    generator.display_art(ascii_art)
+
+    # Save Art
+    print("Do you want to save the ASCII art to a file?")
+    print("1. Yes")
+    print("2. No")
+    save_option = input("Choose an option (1 or 2): ").strip()
+    
+    if save_option == '1':
+        generator.save_art_to_file(ascii_art)
+    elif save_option == '2':
+        print("ASCII art not saved.")
+    else:
+        print("Invalid option. ASCII art not saved.")
+
+if __name__ == "__main__":
+    main()
