@@ -1,0 +1,5 @@
+requests
+tabulate
+colorama
+coverage
+unittest-xml-reporting
