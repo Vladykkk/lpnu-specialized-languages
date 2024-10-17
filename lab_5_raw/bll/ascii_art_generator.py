@@ -1,8 +1,7 @@
-import os
 from colorama import Fore, Style, init
 from dal.point3d import Point3D
 from dal.shapes import Shape3D
-from typing import Optional, Tuple  # Add this line
+from typing import Optional, Tuple
 
 class ASCIIArtGenerator:
     def __init__(self, width: int = 40, height: int = 20):
@@ -42,8 +41,8 @@ class ASCIIArtGenerator:
     def draw_line(self, x1: int, y1: int, x2: int, y2: int, color: str):
         # Drawing logic here
 
-    def clear(self):
-        self.canvas = [[' ' for _ in range(self.width)] for _ in range(self.height)]
+        def clear(self):
+            self.canvas = [[' ' for _ in range(self.width)] for _ in range(self.height)]
 
     def render(self) -> str:
         result = '\n'

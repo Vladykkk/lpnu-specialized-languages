@@ -1,5 +1,5 @@
 import unittest
-from bll import Calculator
+from bll.operations import Calculator
 
 class TestCalculator(unittest.TestCase):
     def setUp(self):

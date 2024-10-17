@@ -1,8 +1,7 @@
 import math
 from dataclasses import dataclass
 from typing import List, Tuple, Optional
-import numpy as np
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style, init
 import json
 import os
 
