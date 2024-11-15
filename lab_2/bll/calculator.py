@@ -1,5 +1,5 @@
 import math
-from dal.memory import Memory
+from ..dal.memory import Memory
 
 class Calculator:
     def __init__(self):

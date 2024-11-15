@@ -1,4 +1,4 @@
-from bll.calculator import Calculator
+from ..bll.calculator import Calculator
 
 class ConsoleUI:
     def __init__(self):

@@ -8,7 +8,6 @@ class CalculatorMemory:
     def recall_from_memory(self):
         return self.memory
 
-
 class CalculatorHistory:
     def __init__(self):
         self.history = []
