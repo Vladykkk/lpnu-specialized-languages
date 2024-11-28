@@ -46,6 +46,11 @@ venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
+## Запуск програми через runner
+```bash
+python3 runner.py
+```
+
 ## Запуск тестів
 
 ```bash
