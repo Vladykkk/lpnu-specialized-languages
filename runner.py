@@ -28,14 +28,14 @@ lab_8_venv_path = os.path.join(
 )
 sys.path.append(lab_8_venv_path)
 
-from lab_1.main import Lab1Command
-from lab_2.main import Lab2Command
-from lab_3.main import Lab3Command
-from lab_4.main import Lab4Command
-from lab_5.main import Lab5Command
-from lab_6.main import Lab6Command
-from lab_7.main import Lab7Command
-from lab_8.main import Lab8Command
+from lab_1.main import Command as Lab1Command
+from lab_2.main import Command as Lab2Command
+from lab_3.main import Command as Lab3Command
+from lab_4.main import Command as Lab4Command
+from lab_5.main import Command as Lab5Command
+from lab_6.main import Command as Lab6Command
+from lab_7.main import Command as Lab7Command
+from lab_8.main import Command as Lab8Command
 
 class Runner:
     def __init__(self):

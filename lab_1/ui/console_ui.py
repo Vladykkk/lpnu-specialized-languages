@@ -5,7 +5,7 @@ decimal_places = 2
 history = []
 memory = 0
 
-def run_console_ui():
+def ui():
     global decimal_places, history, memory
 
     while True:

@@ -2,9 +2,9 @@ from dal.data_loader import DataLoader
 from bll.data_processor import DataProcessor
 from bll.data_visualizer import DataVisualizer
 
-class Lab8Command:
+class Command:
     def execute(self):
-        file_path = 'sources/dataset.csv'
+        file_path = 'lab_8/sources/dataset.csv'
         data_loader = DataLoader(file_path)
         data = data_loader.load_data()
 

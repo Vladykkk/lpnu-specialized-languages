@@ -1,6 +1,6 @@
-from lab_1.ui.console_ui import run_console_ui
+from lab_1.ui.console_ui import ui as run_ui
 
-class Lab1Command:
+class Command:
     def execute(self):
-        ui = run_console_ui()
+        ui = run_ui()
         ui.run()

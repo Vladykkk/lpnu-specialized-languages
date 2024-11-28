@@ -1,0 +1,10 @@
+pyfiglet
+termcolor
+numpy
+colorama
+coverage
+requests
+tabulate
+unittest-xml-reporting
+pandas
+matplotlib

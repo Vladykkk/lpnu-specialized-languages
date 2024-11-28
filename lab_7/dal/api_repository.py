@@ -12,7 +12,7 @@ class APIRepository:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Error fetching data from API: {e}")
+            raise RuntimeError(f"Помилка при отриманні даних з API: {e}")
 
     def save_as_json(self, data, filename):
         with open(filename, 'w') as f:

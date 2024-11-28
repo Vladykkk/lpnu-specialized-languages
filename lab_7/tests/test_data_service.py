@@ -4,7 +4,6 @@ from bll.data_service import DataService
 from dal.api_repository import APIRepository
 
 class TestDataService(unittest.TestCase):
-
     def setUp(self):
         self.mock_repository = MagicMock(spec=APIRepository)
         self.service = DataService(self.mock_repository)

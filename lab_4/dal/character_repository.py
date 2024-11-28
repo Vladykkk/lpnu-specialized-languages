@@ -18,5 +18,5 @@ class CharacterRepository:
                     char_lines = char_lines[:height] + [' ' * width] * (height - len(char_lines))  # Adjust height
                     char_set[char] = char_lines
             else:
-                char_set[char] = [' ' * width] * height  # Default blank character
+                char_set[char] = [' ' * width] * height
         return char_set
